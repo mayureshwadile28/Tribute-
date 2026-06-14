@@ -1,0 +1,933 @@
+/*
+  Anchal's Digital Space — Complete Redesign
+  Krishna ji themed | Timeline | Animated | Cultural
+*/
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+:root {
+    --color-bg: #0a0a12;
+    --color-bg-light: #111122;
+    --color-surface: rgba(255, 255, 255, 0.04);
+    --color-surface-hover: rgba(255, 255, 255, 0.08);
+
+    --color-gold: #e6b422;
+    --color-gold-light: #f5d76e;
+    --color-gold-dim: rgba(230, 180, 34, 0.15);
+
+    --color-teal: #2dd4bf;
+    --color-teal-dim: rgba(45, 212, 191, 0.1);
+
+    --color-pink: #f9a8d4;
+    --color-pink-dim: rgba(249, 168, 212, 0.1);
+
+    --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-hindi: 'Noto Serif Devanagari', serif;
+
+    --color-text: #e8e6e3;
+    --color-text-muted: #9ca3af;
+    --color-text-dim: #6b7280;
+
+    --border-radius: 16px;
+    --max-width: 900px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: var(--color-gold);
+    color: var(--color-bg);
+}
+
+a { color: var(--color-gold); text-decoration: none; }
+strong { color: var(--color-gold-light); font-weight: 600; }
+em { color: var(--color-pink); font-style: italic; }
+
+/* ============================================================
+   FLOATING LOTUS PETALS
+   ============================================================ */
+#petals-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.petal {
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    background: radial-gradient(ellipse at center, var(--color-pink) 0%, transparent 70%);
+    border-radius: 50% 50% 50% 0;
+    opacity: 0;
+    animation: petal-fall linear infinite;
+}
+
+@keyframes petal-fall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) rotate(0deg) scale(0.8);
+    }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(720deg) scale(0.4);
+    }
+}
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light), var(--color-pink));
+    z-index: 9999;
+    transition: width 0.05s linear;
+    box-shadow: 0 0 10px rgba(230, 180, 34, 0.5);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-bg-image {
+    position: absolute;
+    inset: 0;
+    background-image: url('krishna_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.35) saturate(1.2);
+    z-index: -2;
+    animation: slow-zoom 30s ease-in-out infinite alternate;
+}
+
+@keyframes slow-zoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(10, 10, 18, 0.3) 0%,
+        rgba(10, 10, 18, 0.6) 60%,
+        rgba(10, 10, 18, 0.95) 100%
+    );
+    z-index: -1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+}
+
+.hero-pre-title {
+    font-family: var(--font-hindi);
+    font-size: 1.2rem;
+    color: var(--color-gold);
+    letter-spacing: 6px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fade-in 1.5s ease forwards 0.3s;
+}
+
+.hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    font-weight: 900;
+    color: transparent;
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light), #fff, var(--color-gold));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 4s ease-in-out infinite;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.hero-name .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px) rotateX(90deg);
+    animation: letter-in 0.8s ease forwards;
+    animation-delay: calc(0.6s + var(--i) * 0.12s);
+}
+
+@keyframes letter-in {
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--color-text-muted);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 300;
+    opacity: 0;
+    animation: fade-in 1.5s ease forwards 1.8s;
+}
+
+.hero-divider {
+    margin-top: 2rem;
+    color: var(--color-gold);
+    opacity: 0;
+    animation: fade-in 1.5s ease forwards 2.2s;
+}
+
+.flute-icon {
+    width: 120px;
+    height: 20px;
+    animation: gentle-float 3s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes fade-in {
+    to { opacity: 1; }
+}
+
+/* Scroll Cue */
+.scroll-cue {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fade-in 1s ease forwards 3s;
+}
+
+.scroll-cue span {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+}
+
+.scroll-arrow {
+    width: 16px;
+    height: 16px;
+    border-right: 2px solid var(--color-gold);
+    border-bottom: 2px solid var(--color-gold);
+    transform: rotate(45deg);
+    animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+@keyframes bounce-arrow {
+    0%, 100% { transform: translateY(0) rotate(45deg); opacity: 1; }
+    50% { transform: translateY(8px) rotate(45deg); opacity: 0.4; }
+}
+
+/* ============================================================
+   SECTIONS — SHARED
+   ============================================================ */
+.section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 1.5rem;
+}
+
+.section-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.section-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    background: var(--color-gold-dim);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+}
+
+.section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.section p {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+    max-width: 700px;
+}
+
+.lead-text {
+    font-size: 1.2rem !important;
+    color: var(--color-text) !important;
+    line-height: 1.8;
+}
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+.section--about {
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-light) 100%);
+}
+
+.about-bg-decor {
+    position: absolute;
+    top: 50%;
+    right: -5%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    pointer-events: none;
+    color: var(--color-gold);
+    animation: mandala-spin 120s linear infinite;
+}
+
+.mandala-svg {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes mandala-spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+.quote-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--color-surface);
+    border: 1px solid rgba(230, 180, 34, 0.15);
+    border-left: 4px solid var(--color-gold);
+    padding: 1.5rem 2rem;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    margin-top: 2rem;
+}
+
+.quote-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.quote-card p {
+    font-family: var(--font-display);
+    font-size: 1.15rem !important;
+    color: var(--color-gold-light) !important;
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+/* ============================================================
+   TIMELINE SECTION
+   ============================================================ */
+.section--timeline {
+    background: var(--color-bg-light);
+    padding-bottom: 4rem;
+    overflow: hidden;
+}
+
+/* ============================================================
+   STORY WATERMARK — Inside timeline, behind cards
+   This is the "Anchal" name background in The Story section.
+   It's a child of the section so it CAN'T be hidden by
+   the section's own background.
+   ============================================================ */
+.story-watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 8rem;
+    gap: 2rem;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    will-change: transform;
+}
+
+.sw-text {
+    font-family: var(--font-display);
+    font-size: 16vw;
+    font-weight: 900;
+    /* Use actual rgba color instead of transparent + text-stroke
+       for maximum browser compatibility */
+    color: rgba(230, 180, 34, 0.04);
+    line-height: 0.95;
+    user-select: none;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sw-hindi {
+    font-family: var(--font-hindi);
+    font-size: 13vw;
+    color: rgba(249, 168, 212, 0.035);
+    text-transform: none;
+}
+
+.timeline-header {
+    text-align: center;
+    max-width: var(--max-width);
+    margin: 0 auto 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline {
+    position: relative;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+    z-index: 2;
+}
+
+/* Animated vertical line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.timeline-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-pink) 100%);
+    box-shadow: 0 0 12px rgba(230, 180, 34, 0.4);
+    transition: height 0.15s ease-out;
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 0 2.5rem 4rem;
+}
+
+.timeline-item--left {
+    padding-right: 3rem;
+}
+
+.timeline-item--right {
+    margin-left: 50%;
+    padding-left: 3rem;
+}
+
+/* Timeline Dot */
+.timeline-dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--color-gold);
+    border: 3px solid var(--color-bg-light);
+    border-radius: 50%;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0 0 12px rgba(230, 180, 34, 0.5);
+}
+
+.timeline-item--left .timeline-dot {
+    right: -8px;
+}
+
+.timeline-item--right .timeline-dot {
+    left: -8px;
+}
+
+/* Timeline Card */
+.timeline-card {
+    background: rgba(10, 10, 18, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(230, 180, 34, 0.2);
+}
+
+.timeline-era {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.timeline-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+}
+
+.timeline-card p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+}
+
+/* Chat Bubble */
+.chat-bubble {
+    background: var(--color-pink-dim);
+    border: 1px solid rgba(249, 168, 212, 0.2);
+    border-radius: 4px 16px 16px 16px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    max-width: 90%;
+}
+
+.chat-bubble--her {
+    border-color: rgba(249, 168, 212, 0.25);
+}
+
+.chat-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-pink);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.chat-bubble p {
+    font-size: 0.95rem !important;
+    color: var(--color-text) !important;
+    margin-bottom: 0 !important;
+}
+
+.chat-note {
+    font-size: 0.9rem !important;
+    color: var(--color-text-dim) !important;
+    font-style: italic;
+}
+
+/* Sign-off Block */
+.signoff-block {
+    background: linear-gradient(135deg, var(--color-gold-dim), var(--color-teal-dim));
+    border: 1px solid rgba(230, 180, 34, 0.2);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.signoff-text {
+    font-family: var(--font-display);
+    font-size: 1.4rem !important;
+    color: var(--color-gold-light) !important;
+    margin-bottom: 0 !important;
+    animation: glow-text 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow-text {
+    0% { text-shadow: 0 0 4px rgba(230, 180, 34, 0.2); }
+    100% { text-shadow: 0 0 20px rgba(230, 180, 34, 0.5), 0 0 40px rgba(230, 180, 34, 0.2); }
+}
+
+/* Highlight Box */
+.highlight-box {
+    background: var(--color-teal-dim);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: var(--border-radius);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.highlight-box p {
+    font-family: var(--font-display);
+    font-size: 1.2rem !important;
+    color: var(--color-teal) !important;
+    margin-bottom: 0 !important;
+}
+
+/* ============================================================
+   CONFESSION SECTION — Standalone
+   ============================================================ */
+.section--confession {
+    background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg) 50%, var(--color-bg-light) 100%);
+    text-align: center;
+    overflow: hidden;
+}
+
+.confession-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(249, 168, 212, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glow-pulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes glow-pulse {
+    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+.section--confession .section-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.section--confession p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confession-card {
+    max-width: 340px;
+    margin: 2.5rem auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(249, 168, 212, 0.12);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.confession-msgs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.msg-bubble {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.msg-sent {
+    background: rgba(88, 101, 242, 0.15);
+    border: 1px solid rgba(88, 101, 242, 0.2);
+    color: var(--color-text);
+    align-self: flex-end;
+    border-radius: 12px 12px 4px 12px;
+}
+
+.confession-highlight {
+    background: linear-gradient(135deg, var(--color-pink-dim), var(--color-gold-dim));
+    border: 1px solid rgba(249, 168, 212, 0.15);
+    border-radius: var(--border-radius);
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confession-highlight p {
+    font-family: var(--font-display);
+    font-size: 1.3rem !important;
+    color: var(--color-text) !important;
+    margin-bottom: 0 !important;
+}
+
+/* ============================================================
+   KRISHNA QUOTES (between sections)
+   ============================================================ */
+.krishna-quote {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+
+.krishna-quote-inner {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-top: 1px solid rgba(230, 180, 34, 0.1);
+    border-bottom: 1px solid rgba(230, 180, 34, 0.1);
+}
+
+.krishna-quote-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.krishna-quote blockquote {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--color-gold-light);
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+}
+
+.krishna-quote cite {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-style: normal;
+}
+
+/* ============================================================
+   CLOSING SECTION
+   ============================================================ */
+.section--closing {
+    background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg) 100%);
+    text-align: center;
+    padding: 8rem 1.5rem;
+}
+
+.closing-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.closing-motif {
+    color: var(--color-gold);
+    margin-bottom: 2rem;
+    animation: gentle-float 4s ease-in-out infinite;
+}
+
+.lotus-svg {
+    width: 60px;
+    height: 60px;
+}
+
+.closing-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+}
+
+.closing-content p {
+    color: var(--color-text-muted);
+    margin: 0 auto 1rem;
+    max-width: 500px;
+}
+
+.closing-radhe {
+    font-family: var(--font-hindi);
+    font-size: 2rem !important;
+    color: var(--color-gold) !important;
+    margin-top: 2rem !important;
+    animation: glow-text 3s ease-in-out infinite alternate;
+}
+
+.closing-credit {
+    font-size: 0.85rem !important;
+    color: var(--color-text-dim) !important;
+    letter-spacing: 2px;
+    margin-top: 1.5rem !important;
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-item.reveal {
+    transition-delay: 0.15s;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item--left,
+    .timeline-item--right {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 50px;
+        padding-right: 1rem;
+    }
+
+    .timeline-item--left .timeline-dot,
+    .timeline-item--right .timeline-dot {
+        left: 12px;
+        right: auto;
+    }
+
+    .timeline-card {
+        padding: 1.5rem;
+    }
+
+    .section {
+        padding: 4rem 1.25rem;
+    }
+
+    .chat-bubble {
+        max-width: 100%;
+    }
+
+    .signoff-text {
+        font-size: 1.1rem !important;
+    }
+
+    .hero-name {
+        font-size: clamp(3rem, 14vw, 5rem);
+    }
+
+    .sw-text {
+        font-size: 22vw;
+    }
+
+    .sw-hindi {
+        font-size: 18vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-pre-title {
+        font-size: 1rem;
+        letter-spacing: 4px;
+    }
+
+    .hero-subtitle {
+        letter-spacing: 4px;
+        font-size: 0.9rem;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+    }
+
+    .timeline-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .quote-card {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .about-bg-decor {
+        width: 300px;
+        height: 300px;
+        right: -15%;
+    }
+
+    .krishna-quote {
+        padding: 3rem 1.25rem;
+    }
+
+    .krishna-quote blockquote {
+        font-size: 1.05rem;
+    }
+
+    .confession-card {
+        max-width: 100%;
+    }
+
+    .sw-text {
+        font-size: 28vw;
+    }
+
+    .sw-hindi {
+        font-size: 22vw;
+    }
+}
