@@ -654,6 +654,56 @@ em { color: var(--color-pink); font-style: italic; }
 }
 
 /* ============================================================
+   PUZZLE IMAGE — Timeline Chapter VII
+   ============================================================ */
+.puzzle-image-wrapper {
+    margin: 1.5rem 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid rgba(230, 180, 34, 0.25);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(230, 180, 34, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+}
+
+.puzzle-image-wrapper:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(230, 180, 34, 0.15);
+}
+
+.puzzle-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    transition: filter 0.4s ease;
+}
+
+.puzzle-image-wrapper:hover .puzzle-image {
+    filter: brightness(1.05);
+}
+
+.puzzle-caption {
+    display: block;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-gold-light);
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1rem;
+    background: rgba(230, 180, 34, 0.06);
+    border-top: 1px solid rgba(230, 180, 34, 0.12);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* ============================================================
    CONFESSION SECTION — Standalone
    ============================================================ */
 .section--confession {
